@@ -3,7 +3,8 @@ setup();
 
 %% Part 1
 quad = Quad();
-Tf = 1.0; % Time to simulate for
+BIAS = -0.1;
+Tf = 40; % Time to simulate for
 x0 = zeros(12,1); % Initial state
 x0 = [0 0 0 0 0 0 0 0 0 0 0 0];
 u = [1;1;1;1]; % Input to apply
@@ -35,6 +36,6 @@ mpc_y   = MPC_Control_y(sys_y, Ts);
 mpc_z   = MPC_Control_z(sys_z, Ts);
 mpc_yaw = MPC_Control_yaw(sys_yaw, Ts);
 
-sim = quad.sim(mpc_x,mpc_y,mpc_z,mpc_yaw);
-quad.plot(sim,u); % Plot the result
+sim = quad.sim(mpc_x,mpc_y,mpc_z,mpc_yaw,BIAS);
+quad.plot(sim); % Plot the result
 

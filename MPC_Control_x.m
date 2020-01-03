@@ -35,7 +35,7 @@ function ctrl_opt = setup_controller(mpc)
       %       the DISCRETE-TIME MODEL of your system
 
       % WRITE THE CONSTRAINTS AND OBJECTIVE HERE
-      Q = eye(n); R = 1;
+      Q = eye(n)*10; R = 1;
       M = [1; -1]; m = [0.3; 0.3]; 
       F = [0 1 0 0; 0 -1 0 0]; f = [0.035; 0.035];
       
@@ -65,12 +65,12 @@ function ctrl_opt = setup_controller(mpc)
     %  figure(5);plot(Xf.projection(1:2)); xlabel("x position"); ylabel("x speed"); 
 
       con = (x(:,2)-xs == mpc.A*(x(:,1)-xs) + mpc.B*(u(1)-us)) + (M*(u(1)-us) <= m-M*us);
-      obj = ((x(:,1)-xs)'*Qf*(x(:,1)-xs))+(u(:,1)-us)'*R*(u(:,1)-us);
+      obj = ((x(:,1)-xs)'*Q*(x(:,1)-xs))+(u(:,1)-us)'*R*(u(:,1)-us);
        
       for i = 2:N-1
           con = [con, (x(:,i+1)-xs) == mpc.A*(x(:,i)-xs) + mpc.B*(u(i)-us)];     % System dynamics
           con = [con, M*(u(i)-us) <= m-M*us];                       % Input constraints
-          obj = obj + (x(:,i)-xs)'*Qf*(x(:,i)-xs) + (u(i)-us)'*R*(u(i)-us);  % Cost function
+          obj = obj + (x(:,i)-xs)'*Q*(x(:,i)-xs) + (u(i)-us)'*R*(u(i)-us);  % Cost function
           con = [con, F*(x(:,i)-xs) <= f-F*xs];                       % State constraint
       end
       
@@ -107,7 +107,7 @@ function ctrl_opt = setup_controller(mpc)
       nx = size(mpc.A,1);
       nu = size(mpc.B,2);
       
-      Q = eye(n); R = 1;
+      Q = eye(n); R = 2;
       M = [1; -1]; m = [0.3; 0.3]; 
       F = [0 1 0 0; 0 -1 0 0]; f = [0.035; 0.035];      
 
