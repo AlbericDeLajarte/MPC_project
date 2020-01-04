@@ -75,11 +75,11 @@ classdef MPC_Control_z < MPC_Control
    %   figure(4);plot(Xf.projection(3:4)); xlabel("beta angle"); ylabel("beta speed"); 
     %  figure(5);plot(Xf.projection(1:2)); xlabel("x position"); ylabel("x speed"); 
 
-      con = (x(:,2)-xs == mpc.A*(x(:,1)-xs) + mpc.B*(u(1)-us) + mpc.B*d_est) + (M*(u(1)-us) <= m);
+      con = (x(:,2)-xs == mpc.A*(x(:,1)-xs) + mpc.B*(u(1)-us)) + (M*(u(1)-us) <= m);
       obj = ((x(:,1)-xs)'*Q*(x(:,1)-xs))+(u(:,1)-us)'*R*(u(:,1)-us);
       
       for i = 2:N-1
-          con = [con, (x(:,i+1)-xs) == mpc.A*(x(:,i)-xs) + mpc.B*(u(i)-us) + mpc.B*d_est];     % System dynamics
+          con = [con, (x(:,i+1)-xs) == mpc.A*(x(:,i)-xs) + mpc.B*(u(i)-us)];     % System dynamics
           con = [con, M*(u(i)-us) <= m];                       % Input constraints
           obj = obj + (x(:,i)-xs)'*Q*(x(:,i)-xs) + (u(i)-us)'*R*(u(i)-us);  % Cost function
       end 
@@ -118,12 +118,12 @@ classdef MPC_Control_z < MPC_Control
       M = [1; -1]; m = [0.3; 0.2];      
   
       con = [M*us <= m          ,...
-             xs == mpc.A*xs + mpc.B*us +mpc.B*d_est];
+             xs == mpc.A*xs + mpc.B*us + mpc.B*d_est];
 
-      obj  = norm(mpc.C*xs - ref + d_est); 
+      obj  = (mpc.C*xs - ref + d_est)^2; 
       
      % Compute the steady-state target
-      target_opt = optimizer(con, obj, sdpsettings('solver', 'gurobi'), ref, {xs, us});
+      target_opt = optimizer(con, obj, sdpsettings('solver', 'gurobi'), {ref,d_est}, {xs, us});
    end
     
     % Compute augmented system and estimator gain for input disturbance rejection
