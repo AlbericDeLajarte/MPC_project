@@ -1,7 +1,7 @@
 # MPC_project
 MPC controller for a quadcopter
 
-The project is composed of the files MPC_Control_x/y/z/yaw.m that each implements a independant MPC controller.
+The project is composed of the files MPC_Control_x/y/z/yaw.m that each implements an independant MPC controller.
 The file Quad.m is a quadcopter object with all the parameters and method defining a quadcopter.
 The file project.m implements the ToDo's described in the project definition.
 
