@@ -39,8 +39,7 @@ classdef Quad
       try % Test installation
         import casadi.*
         x = casadi.SX.sym('x');
-        
-        x = sdpvar(2,1);
+       % x = sdpvar(2,1);
       catch
         error('Could not load casadi - check that it''s installed properly and on the path')
       end
