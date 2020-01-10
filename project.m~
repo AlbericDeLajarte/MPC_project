@@ -20,7 +20,7 @@ sys_transformed = sys * inv(quad.T); % New system is A * x + B * inv(T) * v
 
 %% Part 3
 clc;
-Ts = 1/5;
+Ts = 1/10;
 quad = Quad(Ts);
 [xs, us] = quad.trim();
 
@@ -30,10 +30,9 @@ sys = quad.linearize(xs, us);
 % Design MPC controller 
 mpc_x = MPC_Control_x(sys_x, Ts);
 mpc_y = MPC_Control_y(sys_y, Ts);
-mpc_z = MPC_Control_z(sys_z, Ts);
 
 
-T_max = 1; % seconds
+T_max = 20; % seconds
 x = zeros(T_max/Ts, 12);
 x(1,:) = [0 0 0 0 0 0 0 0 0 0 0 0]; % ??' ?  p' p
 
@@ -47,17 +46,17 @@ for i= 1:T_max/Ts -1
     Mb = mpc_x.get_u([x(i, 2); x(i, 5); x(i, 7); x(i, 10)]);
     Ma = mpc_y.get_u([x(i, 1); x(i, 4); x(i, 8); x(i, 11)]);
     Mg = 0;
-    F = mpc_z.get_u([x(i, 9); x(i, 12)]);    
+    F = quad.mass*9.81;    
     
     v = [F; Ma; Mb; Mg];
-    u = quad.T\v
+    u = quad.T\v;
     
     [~, x_new] = ode45(@(t, x) quad.f(x, u), [(i-1)*Ts, i*Ts], x(i,:));  % Solve the system ODE
     x(i+1,:) = x_new(end, :);
     i
 end
 
-%% plot
+
 t = Ts:Ts:T_max;
 
 figure(1); plot(t, x(:, 1:3)); xlabel("Time"); ylabel("angle");
