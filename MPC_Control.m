@@ -47,7 +47,7 @@ classdef MPC_Control
         else
           d_est = 0;
         end
-        [u, isfeasible] = mpc.ctrl_opt({x, ref_x, ref_u, d_est}); 
+        [u, isfeasible] = mpc.ctrl_opt({x, ref_x, ref_u, d_est});       
       else
         [u, isfeasible] = mpc.ctrl_opt({x, ref_x, ref_u});
       end
