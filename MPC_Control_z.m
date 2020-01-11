@@ -48,7 +48,7 @@ classdef MPC_Control_z < MPC_Control
       %       the DISCRETE-TIME MODEL of your system
 
       % SET THE PROBLEM CONSTRAINTS con AND THE OBJECTIVE obj HERE
-      Q = 0.01*eye(n); R = 2;
+      Q = 0.1*eye(n); R = 0.1;
       M = [1; -1]; m = [0.3; 0.2]; 
       
       [K, Qf, ~] = dlqr(mpc.A, mpc.B, Q, R);

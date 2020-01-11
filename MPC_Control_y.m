@@ -20,7 +20,7 @@ classdef MPC_Control_y < MPC_Control
       us = sdpvar(m, 1);
       
       % SET THE HORIZON HERE
-      N = 25;
+      N = 14;
       
       % Predicted state and input trajectories
       x = sdpvar(n, N);
@@ -66,8 +66,8 @@ classdef MPC_Control_y < MPC_Control
        end
       [Ff,ff] = double(Xf);
       
-      %figure(4);plot(Xf.projection(3:4)); ylabel("x position"); xlabel("x speed");
-      %figure(5);plot(Xf.projection(1:2)); xlabel("beta angle"); ylabel("beta speed"); 
+      figure(4);plot(Xf.projection(3:4)); ylabel("x position"); xlabel("x speed");
+      figure(5);plot(Xf.projection(1:2)); xlabel("beta angle"); ylabel("beta speed"); 
 
       con = (x(:,2) == mpc.A*x(:,1) + mpc.B*u(1)) + (M*u(1) <= m);
       obj = u(1)'*R*u(1);

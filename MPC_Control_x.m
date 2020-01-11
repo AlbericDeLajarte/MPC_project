@@ -3,7 +3,7 @@ classdef MPC_Control_x < MPC_Control
   methods
     % Design a YALMIP optimizer object that takes a steady-state state
     % and input (xs, us) and returns a control input
-    function ctrl_opt = setup_controller(mpc)
+    function ctrl_opt = setup_controller(mpc, Q, R)
 
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       % INPUTS
@@ -20,7 +20,7 @@ classdef MPC_Control_x < MPC_Control
       us = sdpvar(m, 1);
       
       % SET THE HORIZON HERE
-      N = 25;
+      N = 14;
       
       % Predicted state and input trajectories
       x = sdpvar(n, N);
@@ -34,7 +34,8 @@ classdef MPC_Control_x < MPC_Control
       %       the DISCRETE-TIME MODEL of your system
 
       % WRITE THE CONSTRAINTS AND OBJECTIVE HERE
-      Q = 0.01*eye(n); R = 2;
+      %Q = eye(n); Q(2,2) = 1/(0.035^2);
+      %R = 1/(0.3^2);
       M = [1; -1]; m = [0.3; 0.3]; 
       F = [0 1 0 0; 0 -1 0 0]; f = [0.035; 0.035];
       
@@ -44,7 +45,8 @@ classdef MPC_Control_x < MPC_Control
        % Compute maximal invariant set
        Xf = polytope([F;M*K],[f;m]);
 
-       %figure(3); plot(Xf.projection(3:4)); hold on;
+       %figure(4); plot(Xf.projection(3:4), 'b'); hold on;
+       %figure(5);plot(Xf.projection(1:2),'b'); hold on;
       
        Acl =  mpc.A + mpc.B*K;
        while 1
@@ -60,8 +62,8 @@ classdef MPC_Control_x < MPC_Control
        end
       [Ff,ff] = double(Xf);
       
-      %figure(4);plot(Xf.projection(3:4)); ylabel("x position"); xlabel("x speed");
-      %figure(5);plot(Xf.projection(1:2)); xlabel("beta angle"); ylabel("beta speed"); 
+      %figure(4);plot(Xf.projection(3:4)); ylabel("x position"); xlabel("x speed");hold on;
+      figure(5);plot(Xf.projection(1:2)); xlabel("beta angle"); ylabel("beta speed"); hold on;
 
       con = (x(:,2) == mpc.A*x(:,1) + mpc.B*u(1)) + (M*u(1) <= m);
       obj = u(1)'*R*u(1);

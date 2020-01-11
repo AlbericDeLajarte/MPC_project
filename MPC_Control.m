@@ -8,14 +8,14 @@ classdef MPC_Control
   end
   
   methods
-    function mpc = MPC_Control(sys, Ts)
+    function mpc = MPC_Control(sys, Ts, Q, R)
       
       % Discretize the system and extract the A,B,C,D matrices
       sys_d = c2d(sys, Ts);
       [mpc.A,mpc.B,mpc.C,mpc.D] = ssdata(sys_d);
       
       mpc.target_opt = mpc.setup_steady_state_target();
-      mpc.ctrl_opt = mpc.setup_controller();
+      mpc.ctrl_opt = mpc.setup_controller(Q, R);
     end
     
     % Compute the MPC controller
