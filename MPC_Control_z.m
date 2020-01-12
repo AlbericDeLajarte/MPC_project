@@ -101,7 +101,7 @@ classdef MPC_Control_z < MPC_Control
    end
     
     % Compute augmented system and estimator gain for input disturbance rejection
-    function [A_bar, B_bar, C_bar, L] = setup_estimator(mpc)
+     function [A_bar, B_bar, C_bar, L] = setup_estimator(mpc)
       
       %%% Design the matrices A_bar, B_bar, L, and C_bar
       %%% so that the estimate x_bar_next [ x_hat; disturbance_hat ]
@@ -112,18 +112,13 @@ classdef MPC_Control_z < MPC_Control
       % YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE 
       % You can use the matrices mpc.A, mpc.B, mpc.C and mpc.D
       
-      nx   = size(mpc.A,1);
-      nu   = size(mpc.B,2);
-      ny   = size(mpc.C,1);
-      A_bar = [mpc.A          , mpc.B;
-               zeros(1,nx),1          ];
-      B_bar = [mpc.B;zeros(1,nu)];
-      C_bar = [mpc.C,ones(ny,1)];
-
-      L = -place(A_bar',C_bar',[0.3,0.4,0.5])';
+      A_bar = [];
+      B_bar = [];
+      C_bar = [];
+      L = [];
       
       % YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE 
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    end   
+    end  
   end
 end
