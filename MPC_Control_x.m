@@ -25,8 +25,7 @@ function ctrl_opt = setup_controller(mpc)
       
       % Predicted state and input trajectories
       x = sdpvar(n, N);
-      u = sdpvar(m, N-1);
-      
+      u = sdpvar(m, N-1);   
 
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       % YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE 
