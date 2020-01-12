@@ -51,31 +51,6 @@ classdef MPC_Control_z < MPC_Control
       R = 3.1;
       M = [1; -1]; m = [0.3; 0.2]; 
      
-      [K, Qf, ~] = dlqr(mpc.A, mpc.B, Q, R);
-      K = -K;
-      
-       % Compute maximal invariant set
-       Xf = polytope(M*K,m);
-
-    %   figure(3); plot(Xf.projection(3:4)); hold on;
-      
-       Acl =  mpc.A + mpc.B*K;
-       while 1
-           prevXf = Xf;
-           [T,t] = double(Xf);
-           preXf = polytope(T*Acl,t);
-           Xf = intersect(Xf, preXf);
-           if isequal(prevXf, Xf)
-               break
-           end
-     %      plot(Xf.projection(3:4)); hold on;
-           %pause;
-       end
-      [Ff,ff] = double(Xf);
-      
-   %   figure(4);plot(Xf.projection(3:4)); xlabel("beta angle"); ylabel("beta speed"); 
-    %  figure(5);plot(Xf.projection(1:2)); xlabel("x position"); ylabel("x speed"); 
-
       con = (x(:,2)-xs == mpc.A*(x(:,1)-xs) + mpc.B*(u(1)-us)) + (M*(u(1)-us) <= m);
       obj = ((x(:,1)-xs)'*Q*(x(:,1)-xs))+(u(:,1)-us)'*R*(u(:,1)-us);
       
