@@ -1,7 +1,9 @@
 %% Setup
 setup();
 
-%% Part 4
+%% Part 5
+
+BIAS = -0.1;
 clc
 Ts = 1/5;
 quad = Quad(Ts);
@@ -18,5 +20,5 @@ mpc_z   = MPC_Control_z(sys_z, Ts);
 mpc_yaw = MPC_Control_yaw(sys_yaw, Ts);
 
 
-sim = quad.sim(mpc_x,mpc_y,mpc_z,mpc_yaw);
+sim = quad.sim(mpc_x,mpc_y,mpc_z,mpc_yaw, BIAS);
 quad.plot(sim); % Plot the result
