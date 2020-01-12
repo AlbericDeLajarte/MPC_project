@@ -1,3 +1,6 @@
+%% Setup
+setup();
+
 %% Optimization
 clc;
 Ts = 1/5; T_max = 10; %seconds
