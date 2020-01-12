@@ -20,7 +20,7 @@ classdef MPC_Control_yaw < MPC_Control
       us = sdpvar(m, 1);
       
       % SET THE HORIZON HERE
-      N = 15;
+      N = 14;
       
       % Predicted state and input trajectories
       x = sdpvar(n, N);
@@ -34,7 +34,8 @@ classdef MPC_Control_yaw < MPC_Control
       %       the DISCRETE-TIME MODEL of your system
 
       % SET THE PROBLEM CONSTRAINTS con AND THE OBJECTIVE obj HERE
-      Q = eye(n); R = 1;
+      Q = eye(2); Q(1,1) = 6.3; Q(2,2) = 8.5;
+      R = 3.1;
       M = [1; -1]; m = [0.2; 0.2]; 
      
       [K, Qf, ~] = dlqr(mpc.A, mpc.B, Q, R);
@@ -102,7 +103,7 @@ classdef MPC_Control_yaw < MPC_Control
       nx = size(mpc.A,1);
       nu = size(mpc.B,2);
       
-      Q = eye(n); R = 20;
+%      Q = eye(n); R = 20;
       M = [1; -1]; m = [0.2; 0.2]; 
       
       con = [M*us <= m          ,...

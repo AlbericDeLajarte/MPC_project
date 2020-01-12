@@ -20,7 +20,7 @@ classdef MPC_Control_y < MPC_Control
       us = sdpvar(m, 1);
       
       % SET THE HORIZON HERE
-      N = 15;  %aka 8sec /Ts, sachant que l'énoncé veut qu'on prenne 8 secondes pour remettre à l'origine le drone écarté de 2m sur x ou y
+      N = 14;  %aka 8sec /Ts, sachant que l'énoncé veut qu'on prenne 8 secondes pour remettre à l'origine le drone écarté de 2m sur x ou y
       
       % Predicted state and input trajectories
       x = sdpvar(n, N);
@@ -34,7 +34,8 @@ classdef MPC_Control_y < MPC_Control
       %       the DISCRETE-TIME MODEL of your system
 
       % WRITE THE CONSTRAINTS AND OBJECTIVE HERE
-      Q = eye(n); R = 2;
+     Q = 10*eye(4); Q(3,3) = 6.3; Q(4,4) = 8.5;
+      R = 3.1;
       M = [1; -1]; m = [0.3; 0.3]; 
       F = [0 1 0 0; 0 -1 0 0]; f = [0.035; 0.035];
       
@@ -106,7 +107,7 @@ classdef MPC_Control_y < MPC_Control
       nx = size(mpc.A,1);
       nu = size(mpc.B,2);
       
-      Q = eye(n)*2; R = 1;
+ %     Q = eye(n)*2; R = 1;
       M = [1; -1]; m = [0.3; 0.3]; 
       F = [0 1 0 0; 0 -1 0 0]; f = [0.035; 0.035];      
 
