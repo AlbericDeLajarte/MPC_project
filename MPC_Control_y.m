@@ -3,7 +3,7 @@ classdef MPC_Control_y < MPC_Control
   methods
     % Design a YALMIP optimizer object that takes a steady-state state
     % and input (xs, us) and returns a control input
-    function ctrl_opt = setup_controller(mpc)
+    function ctrl_opt = setup_controller(mpc, Q, R)
 
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       % INPUTS
@@ -40,8 +40,8 @@ classdef MPC_Control_y < MPC_Control
       
       % YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE YOUR CODE HERE 
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      Q = 10*eye(4); Q(3,3) = 6.3; Q(4,4) = 8.5;
-      R = 3.1;
+%       Q = 10*eye(4); Q(3,3) = 6.3; Q(4,4) = 8.5;
+%       R = 3.1;
       M = [1; -1]; m = [0.3; 0.3]; 
       F = [0 1 0 0; 0 -1 0 0]; f = [0.035; 0.035];
       

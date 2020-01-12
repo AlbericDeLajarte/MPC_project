@@ -3,7 +3,7 @@ classdef MPC_Control_yaw < MPC_Control
   methods
     % Design a YALMIP optimizer object that takes a steady-state state
     % and input (xs, us) and returns a control input
-    function ctrl_opt = setup_controller(mpc)
+    function ctrl_opt = setup_controller(mpc, Q, R)
 
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       % INPUTS
@@ -34,8 +34,8 @@ classdef MPC_Control_yaw < MPC_Control
       %       the DISCRETE-TIME MODEL of your system
 
       % WRITE THE CONSTRAINTS AND OBJECTIVE HERE
-      Q = eye(2); Q(1,1) = 6.3; Q(2,2) = 8.5;
-      R = 3.1;
+%       Q = eye(2); Q(1,1) = 6.3; Q(2,2) = 8.5;
+%       R = 3.1;
       M = [1; -1]; m = [0.2; 0.2]; 
       
       [K, Qf, ~] = dlqr(mpc.A, mpc.B, Q, R);

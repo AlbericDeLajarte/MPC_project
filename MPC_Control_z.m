@@ -5,15 +5,15 @@ classdef MPC_Control_z < MPC_Control
   end
   
   methods
-    function mpc = MPC_Control_z(sys, Ts)
-      mpc = mpc@MPC_Control(sys, Ts);
+    function mpc = MPC_Control_z(sys, Ts, Q, R)
+      mpc = mpc@MPC_Control(sys, Ts, Q, R);
       
       [mpc.A_bar, mpc.B_bar, mpc.C_bar, mpc.L] = mpc.setup_estimator();
     end
     
     % Design a YALMIP optimizer object that takes a steady-state state
     % and input (xs, us) and returns a control input
-    function ctrl_opt = setup_controller(mpc)
+    function ctrl_opt = setup_controller(mpc, Q, R)
 
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
       % INPUTS
@@ -48,8 +48,8 @@ classdef MPC_Control_z < MPC_Control
       %       the DISCRETE-TIME MODEL of your system
 
       % SET THE PROBLEM CONSTRAINTS con AND THE OBJECTIVE obj HERE
-      Q = eye(2); Q(1,1) = 6.3; Q(2,2) = 8.5;
-      R = 3.1;
+%       Q = eye(2); Q(1,1) = 6.3; Q(2,2) = 8.5;
+%       R = 3.1;
       M = [1; -1]; m = [0.3; 0.2]; 
       
       [K, Qf, ~] = dlqr(mpc.A, mpc.B, Q, R);
