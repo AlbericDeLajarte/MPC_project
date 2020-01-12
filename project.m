@@ -29,23 +29,23 @@ end
 
 %% Plot
 figure(1); 
-plot(Ts:Ts:T_max, x(4, :)); hold on;
-plot(Ts:Ts:T_max, y(4, :)); hold on;
-plot(Ts:Ts:T_max, z(2, :)); hold on;
+plot(0:Ts:T_max-Ts, x(4, :)); hold on;
+plot(0:Ts:T_max-Ts, y(4, :)); hold on;
+plot(0:Ts:T_max-Ts, z(2, :)); hold on;
 
-plot(Ts:Ts:T_max, ones(1,T_max/Ts)*(-2+2/1000), 'k'); hold on;
-plot(Ts:Ts:T_max, ones(1,T_max/Ts)*(-2-2/1000), 'k'); hold on;
+plot(0:Ts:T_max-Ts, ones(1,T_max/Ts)*(-2+2/1000), 'k'); hold on;
+plot(0:Ts:T_max-Ts, ones(1,T_max/Ts)*(-2-2/1000), 'k'); hold on;
 xlabel("Time [s]"); ylabel("Position [m]");
 legend("x position", "y position", "z position");
 
 figure(2);
-plot(Ts:Ts:T_max, x(2, :)); hold on;
-plot(Ts:Ts:T_max, y(2, :)); hold on;
-plot(Ts:Ts:T_max, yaw(2, :)); hold on;
+plot(0:Ts:T_max-Ts, x(2, :)); hold on;
+plot(0:Ts:T_max-Ts, y(2, :)); hold on;
+plot(0:Ts:T_max-Ts, yaw(2, :)); hold on;
 
-plot(Ts:Ts:T_max, ones(1,T_max/Ts)*(0.785+0.785/1000), 'k'); hold on;
-plot(Ts:Ts:T_max, ones(1,T_max/Ts)*(0.785-0.785/1000), 'k'); hold on;
-plot(Ts:Ts:T_max, ones(1,T_max/Ts)*(0.785/1000), 'k'); hold on;
-plot(Ts:Ts:T_max, ones(1,T_max/Ts)*(-0.785/1000), 'k'); hold on;
+plot(0:Ts:T_max-Ts, ones(1,T_max/Ts)*(0.785+0.785/1000), 'k'); hold on;
+plot(0:Ts:T_max-Ts, ones(1,T_max/Ts)*(0.785-0.785/1000), 'k'); hold on;
+plot(0:Ts:T_max-Ts, ones(1,T_max/Ts)*(0.785/1000), 'k'); hold on;
+plot(0:Ts:T_max-Ts, ones(1,T_max/Ts)*(-0.785/1000), 'k'); hold on;
 xlabel("Time [s]"); ylabel("angle [rad]");
 legend("pitch", "roll", "yaw");

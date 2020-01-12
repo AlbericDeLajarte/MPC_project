@@ -47,7 +47,8 @@ classdef MPC_Control_z < MPC_Control
       %       the DISCRETE-TIME MODEL of your system
 
       % SET THE PROBLEM CONSTRAINTS con AND THE OBJECTIVE obj HERE
-      Q = eye(n); R = 20;
+      Q = eye(2); Q(1,1) = 6.3; Q(2,2) = 8.5;
+      R = 3.1;
       M = [1; -1]; m = [0.3; 0.2]; 
 
       con = (x(:,2)-xs == mpc.A*(x(:,1)-xs) + mpc.B*(u(1)-us)) + (M*(u(1)-us) <= m);
